@@ -130,6 +130,27 @@ public class Client {
   }
 
   /**
+   * Index a single document.
+   * @param engineName unique engine name
+   * @param document A single document to index
+   * @return a document creation status
+   * @throws ClientException if the api request fails or if there were errors in processing the document
+   */
+  public Map<String, Object> indexDocument(String engineName, Map<String, Object> document) throws ClientException {
+    List<Map<String, Object>> documents = Arrays.asList(document);
+    List<Map<String, Object>> response = indexDocuments(engineName, documents);
+
+    Map<String, Object> documentIndexingStatus = (Map<String, Object>) response.get(0);
+    List<String> errors = (List<String>) documentIndexingStatus.remove("errors");
+    if (errors.size() > 0) {
+      String errorMessage = String.format("Invalid document: %s", String.join("; ", errors));
+      throw new InvalidDocumentException(errorMessage);
+    }
+
+    return documentIndexingStatus;
+  }
+
+  /**
    * Index a batch of documents.
    *
    * @param engineName unique engine name
