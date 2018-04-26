@@ -29,7 +29,6 @@ import com.google.gson.reflect.TypeToken;
 public class Client {
   // Remember to also update version in build.gradle!
   private final String VERSION = "0.1.0";
-  private final List<String> REQUIRED_TOP_LEVEL_DOCUMENT_KEYS = Arrays.asList("id");
 
   private final String baseUrl;
   private final String apiKey;
@@ -139,9 +138,6 @@ public class Client {
    * @throws ClientException if the api request fails
    */
   public List<Map<String, Object>> indexDocuments(String engineName, List<Map<String, Object>> documents) throws ClientException {
-    for (Map<String, Object> d : documents) {
-      validateDocument(d);
-    }
     return makeJsonRequest("POST", String.format("engines/%s/documents", engineName), documents, JsonTypes.ARRAY_OF_OBJECTS);
   }
 
@@ -217,16 +213,6 @@ public class Client {
 
   String baseUrl() {
     return this.baseUrl;
-  }
-
-  private void validateDocument(Map<String, Object> document) throws ClientException {
-    List<String> missingRequiredKeys = REQUIRED_TOP_LEVEL_DOCUMENT_KEYS.stream()
-      .filter(k -> !document.containsKey(k))
-      .collect(Collectors.toList());
-
-    if (!missingRequiredKeys.isEmpty()) {
-      throw new ClientException(String.format("Missing required fields: %s", missingRequiredKeys));
-    }
   }
 
   private static class HttpDynamicRequestWithBody extends HttpEntityEnclosingRequestBase {
