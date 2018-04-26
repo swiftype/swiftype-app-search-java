@@ -2,10 +2,7 @@ package com.swiftype.appsearch;
 
 import java.security.InvalidKeyException;
 import java.security.SignatureException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -90,5 +87,31 @@ class ClientTest {
     client.createEngine(engineName);
     Map<String, Object> response = client.getEngine(engineName);
     assertEquals(response.get("name"), engineName);
+  }
+
+  @Test
+  void indexDocumentsWithId() throws ClientException {
+    String doc1_id = "INscMGmhmX4";
+    Map<String, Object> doc1 = new HashMap<>();
+    doc1.put("id", doc1_id);
+    doc1.put("url", "https://www.youtube.com/watch?v=INscMGmhmX4");
+
+    List<Map<String, Object>> documents = Arrays.asList(doc1);
+
+    client.createEngine(engineName);
+    List<Map<String, Object>> response = client.indexDocuments(engineName, documents);
+    assertEquals(response.get(0).get("id"), doc1_id);
+  }
+
+  @Test
+  void indexDocumentsWithoutId() throws ClientException {
+    Map<String, Object> doc1 = new HashMap<>();
+    doc1.put("url", "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+
+    List<Map<String, Object>> documents = Arrays.asList(doc1);
+
+    client.createEngine(engineName);
+    List<Map<String, Object>> response = client.indexDocuments(engineName, documents);
+    assertEquals(response.get(0).get("id").getClass(), String.class);
   }
 }
