@@ -1,18 +1,46 @@
 package com.swiftype.appsearch;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.security.InvalidKeyException;
 import java.security.SignatureException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class ClientTest {
+
+  private String hostKey;
+  private String apiKey;
+  private String engineName;
+  private Client client;
+
+  @BeforeEach
+  public void setUp() {
+    hostKey = System.getenv("ST_APP_SEARCH_HOST_KEY");
+    apiKey = System.getenv("ST_APP_SEARCH_API_KEY");
+    engineName = Optional.ofNullable(System.getenv("ST_APP_SEARCH_TEST_ENGINE_NAME"))
+      .orElse("java-client-test-engine");
+
+    assertNotNull(hostKey);
+    assertNotNull(apiKey);
+
+    client = new Client(hostKey, apiKey);
+
+    try {
+      client.destroyEngine(engineName);
+    } catch(ClientException e) {
+    }
+  }
+
   @Test
   void testBaseUrl() {
-    assertEquals("https://host-c5s2mj.api.swiftype.com/api/as/v1/", client().baseUrl());
+    assertEquals(String.format("https://%s.api.swiftype.com/api/as/v1/", hostKey), client.baseUrl());
   }
 
   @Test
@@ -29,7 +57,38 @@ class ClientTest {
     assertEquals("cat", decodedPayload.get("query"));
   }
 
-  private Client client() {
-    return new Client("host-c5s2mj", "api-mu75psc5egt9ppzuycnc2mc3");
+  @Test
+  void createAndDestroyEngine() throws ClientException {
+    Map<String, Object> createResponse = client.createEngine(engineName);
+    assertEquals(createResponse.get("name"), engineName);
+
+    Map<String, Boolean> response = client.destroyEngine(engineName);
+    assertTrue(response.get("deleted"));
+  }
+
+  @Test
+  void listEngines() throws ClientException {
+    List<Map<String, Object>> engines = client.listEngines();
+    client.createEngine(engineName);
+    List<Map<String, Object>> enginesAfterCreate = client.listEngines();
+
+    assertEquals(enginesAfterCreate.size() - 1, engines.size());
+    List<Map<String, Object>> enginesWithEngineName = enginesAfterCreate
+      .stream()
+      .filter(e -> e.get("name").equals(engineName))
+      .collect(Collectors.toList());
+    assertEquals(enginesWithEngineName.size(), 1);
+  }
+
+  @Test
+  void getEngine() throws ClientException {
+    assertThrows(ClientException.class,
+      () -> {
+        client.getEngine(engineName);
+      }
+    );
+    client.createEngine(engineName);
+    Map<String, Object> response = client.getEngine(engineName);
+    assertEquals(response.get("name"), engineName);
   }
 }

@@ -110,6 +110,8 @@ try {
 ## Running Tests
 
 ```bash
+ST_APP_SEARCH_HOST_KEY=YOUR_HOST_KEY
+ST_APP_SEARCH_API_KEY=YOUR_API_KEY
 gradle test
 ```
 
