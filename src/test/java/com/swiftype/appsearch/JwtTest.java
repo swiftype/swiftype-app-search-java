@@ -15,18 +15,18 @@ class JwtTest {
     String signedKey = Jwt.sign(
       "api-mu75psc5egt9ppzuycnc2mc3",
       "{\"typ\":\"JWT\",\"alg\":\"HS256\"}",
-      "{\"query\":\"cat\",\"api_key_id\":\"42\"}"
+      "{\"query\":\"cat\",\"api_key_name\":\"my-token-name\"}"
     );
 
     assertEquals(
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJxdWVyeSI6ImNhdCIsImFwaV9rZXlfaWQiOiI0MiJ9.MSSucKMyjKrqXQeEMeVzCyjHLm32Z66wr_dQ3IITYgY",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJxdWVyeSI6ImNhdCIsImFwaV9rZXlfbmFtZSI6Im15LXRva2VuLW5hbWUifQ.hhdpalMFuWwuhsVBpHr9piQpg9ISo7xkxp0vSe8Fb50",
       signedKey
     );
 
     Map<String, Object> decodedPayload = Jwt.verify("api-mu75psc5egt9ppzuycnc2mc3", signedKey);
 
     assertEquals(2, decodedPayload.size());
-    assertEquals("42", decodedPayload.get("api_key_id"));
+    assertEquals("my-token-name", decodedPayload.get("api_key_name"));
     assertEquals("cat", decodedPayload.get("query"));
 
     assertThrows(SignatureException.class, () -> {

@@ -28,7 +28,7 @@ import com.google.gson.reflect.TypeToken;
  */
 public class Client {
   // Remember to also update version in build.gradle!
-  private final String VERSION = "0.1.0";
+  private final String VERSION = "0.1.1";
 
   private final String baseUrl;
   private final String apiKey;
@@ -189,15 +189,15 @@ public class Client {
   /**
    * Creates a jwt search key that can be used for authentication to enforce a set of required search options.
    *
-   * @param apiKeyId the unique API Key identifier
+   * @param apiKeyName the unique name for the API Key
    * @param options see the <a href="https://swiftype.com/documentation/app-search/">App Search API</a> for supported search options
    * @return jwt search key
    * @throws InvalidKeyException if the api key is invalid
    */
-  public static String createSignedSearchKey(String apiKey, String apiKeyId, Map<String, Object> options) throws InvalidKeyException {
+  public static String createSignedSearchKey(String apiKey, String apiKeyName, Map<String, Object> options) throws InvalidKeyException {
     Map<String, Object> payload = new HashMap<>();
     payload.putAll(options);
-    payload.put("api_key_id", apiKeyId);
+    payload.put("api_key_name", apiKeyName);
     return Jwt.sign(apiKey, payload);
   }
 
