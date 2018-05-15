@@ -157,7 +157,9 @@ public class Client {
     List<Map<String, Object>> documents = Arrays.asList(document);
     List<Map<String, Object>> response = indexDocuments(engineName, documents);
 
-    Map<String, Object> documentIndexingStatus = (Map<String, Object>) response.get(0);
+    Map<String, Object> documentIndexingStatus = response.get(0);
+
+    @SuppressWarnings("unchecked")
     List<String> errors = (List<String>) documentIndexingStatus.remove("errors");
     if (errors.size() > 0) {
       String errorMessage = String.format("Invalid document: %s", String.join("; ", errors));
