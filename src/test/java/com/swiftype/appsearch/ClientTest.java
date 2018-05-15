@@ -94,7 +94,7 @@ class ClientTest {
         .stream()
         .filter(e -> e.get("name").equals(engineName))
         .collect(Collectors.toList());
-    assertEquals(enginesWithEngineName.size(), 1);  
+    assertEquals(enginesWithEngineName.size(), 1);
   }
 
   @Test

@@ -16,6 +16,14 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+compileJava {
+  options.compilerArgs << '-Xlint:all'
+}
+
+compileTestJava {
+  options.compilerArgs << '-Xlint:all'
+}
+
 repositories {
   mavenCentral()
 }
