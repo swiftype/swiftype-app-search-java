@@ -26,7 +26,7 @@ class ClientTest {
     hostKey = System.getenv("ST_APP_SEARCH_HOST_KEY");
     apiKey = System.getenv("ST_APP_SEARCH_API_KEY");
     engineName = Optional.ofNullable(System.getenv("ST_APP_SEARCH_TEST_ENGINE_NAME"))
-      .orElse("java-client-test-engine");
+        .orElse("java-client-test-engine");
 
     assertNotNull(hostKey, "Missing required env variable: ST_APP_SEARCH_HOST_KEY");
     assertNotNull(apiKey, "Missing required env variable: ST_APP_SEARCH_API_KEY");
@@ -67,27 +67,43 @@ class ClientTest {
     assertTrue(response.get("deleted"));
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   void listEngines() throws ClientException {
-    List<Map<String, Object>> engines = client.listEngines();
+    List<Map<String, Object>> engines = (List<Map<String, Object>>) client.listEngines().get("results");
     client.createEngine(engineName);
-    List<Map<String, Object>> enginesAfterCreate = client.listEngines();
+    List<Map<String, Object>> enginesAfterCreate = (List<Map<String, Object>>) client.listEngines().get("results");
 
     assertEquals(enginesAfterCreate.size() - 1, engines.size());
     List<Map<String, Object>> enginesWithEngineName = enginesAfterCreate
-      .stream()
-      .filter(e -> e.get("name").equals(engineName))
-      .collect(Collectors.toList());
+        .stream()
+        .filter(e -> e.get("name").equals(engineName))
+        .collect(Collectors.toList());
     assertEquals(enginesWithEngineName.size(), 1);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  void listEnginesWithPagination() throws ClientException {
+    List<Map<String, Object>> engines = (List<Map<String, Object>>) client.listEngines(1, 20).get("results");
+    client.createEngine(engineName);
+    List<Map<String, Object>> enginesAfterCreate = (List<Map<String, Object>>) client.listEngines(1, 20).get("results");
+
+    assertEquals(enginesAfterCreate.size() - 1, engines.size());
+    List<Map<String, Object>> enginesWithEngineName = enginesAfterCreate
+        .stream()
+        .filter(e -> e.get("name").equals(engineName))
+        .collect(Collectors.toList());
+    assertEquals(enginesWithEngineName.size(), 1);  
   }
 
   @Test
   void getEngine() throws ClientException {
     assertThrows(ClientException.class,
-      () -> {
-        client.getEngine(engineName);
-      }
-    );
+        () -> {
+          client.getEngine(engineName);
+        }
+        );
     client.createEngine(engineName);
     Map<String, Object> response = client.getEngine(engineName);
     assertEquals(response.get("name"), engineName);
@@ -149,9 +165,9 @@ class ClientTest {
 
     client.createEngine(engineName);
     assertThrows(InvalidDocumentException.class,
-      () -> {
-        client.indexDocument(engineName, document);
-      }
-    );
+        () -> {
+          client.indexDocument(engineName, document);
+        }
+        );
   }
 }
