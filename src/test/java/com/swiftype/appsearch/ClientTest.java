@@ -28,8 +28,8 @@ class ClientTest {
     engineName = Optional.ofNullable(System.getenv("ST_APP_SEARCH_TEST_ENGINE_NAME"))
       .orElse("java-client-test-engine");
 
-    assertNotNull(hostKey);
-    assertNotNull(apiKey);
+    assertNotNull(hostKey, "Missing required env variable: ST_APP_SEARCH_HOST_KEY");
+    assertNotNull(apiKey, "Missing required env variable: ST_APP_SEARCH_API_KEY");
 
     client = new Client(hostKey, apiKey);
 
@@ -49,12 +49,12 @@ class ClientTest {
     Map<String, Object> options = new HashMap<>();
     options.put("query", "cat");
 
-    String signedKey = Client.createSignedSearchKey("api-mu75psc5egt9ppzuycnc2mc3", "42", options);
+    String signedKey = Client.createSignedSearchKey("api-mu75psc5egt9ppzuycnc2mc3", "my-token-name", options);
 
     Map<String, Object> decodedPayload = Jwt.verify("api-mu75psc5egt9ppzuycnc2mc3", signedKey);
 
     assertEquals(2, decodedPayload.size());
-    assertEquals("42", decodedPayload.get("api_key_id"));
+    assertEquals("my-token-name", decodedPayload.get("api_key_name"));
     assertEquals("cat", decodedPayload.get("query"));
   }
 
@@ -144,10 +144,8 @@ class ClientTest {
 
   @Test
   void invalidDocumentException() throws ClientException {
-    Map<String, Object> innerField = new HashMap<>();
-    innerField.put("no", "nested objects");
     Map<String, Object> document = new HashMap<>();
-    document.put("bad", innerField);
+    document.put("bad_field_name_because_this_key_value_is_really_really_really_long_almost_too_long_to_where_it_makes_you_uncomfortable_and_you_want_to_stop_reading_but_you_cant_so_you_just_keep_going", "foo");
 
     client.createEngine(engineName);
     assertThrows(InvalidDocumentException.class,
