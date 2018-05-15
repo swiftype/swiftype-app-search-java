@@ -80,6 +80,20 @@ class ClientTest {
       .collect(Collectors.toList());
     assertEquals(enginesWithEngineName.size(), 1);
   }
+  
+  @Test
+  void listEnginesWithPagination() throws ClientException {
+    List<Map<String, Object>> engines = client.listEngines(1, 20);
+    client.createEngine(engineName);
+    List<Map<String, Object>> enginesAfterCreate = client.listEngines(1, 20);
+
+    assertEquals(enginesAfterCreate.size() - 1, engines.size());
+    List<Map<String, Object>> enginesWithEngineName = enginesAfterCreate
+      .stream()
+      .filter(e -> e.get("name").equals(engineName))
+      .collect(Collectors.toList());
+	assertEquals(enginesWithEngineName.size(), 1);  
+  }
 
   @Test
   void getEngine() throws ClientException {
