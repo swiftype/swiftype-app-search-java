@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -28,7 +27,7 @@ import com.google.gson.reflect.TypeToken;
  */
 public class Client {
   // Remember to also update version in build.gradle!
-  private final String VERSION = "0.1.1";
+  private final String VERSION = "1.0.0";
 
   private final String baseUrl;
   private final String apiKey;
@@ -83,11 +82,26 @@ public class Client {
   }
 
   /**
-   * Lists engines that the api key has access to.
-   * @return list of engines
+   * Lists the first 20 engines that the api key has access to.
+   * @return engines list
    * @throws ClientException if the api request fails
    */
   public List<Map<String, Object>> listEngines() throws ClientException {
+    return listEngines(1, 20);
+  }
+
+  /**
+   * Lists engines that the api key has access to.
+   * @param page page number offset
+   * @param perPage number of engines per page
+   * @return engines list
+   * @throws ClientException if the api request fails
+   */
+  public List<Map<String, Object>> listEngines(Integer page, Integer perPage) throws ClientException {
+	Map<String, Object> reqBody = new HashMap<>();
+	reqBody.put("page", page);
+	reqBody.put("perPage", perPage);
+	    
     return makeJsonRequest("GET", "engines", null, JsonTypes.ARRAY_OF_OBJECTS);
   }
 
