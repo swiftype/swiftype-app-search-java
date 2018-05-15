@@ -9,7 +9,7 @@ buildscript {
 }
 
 // Remember to also update version in src/main/java/com/swiftype/appsearch/Client.java!
-version = "0.1.1"
+version = "0.1.2"
 
 apply plugin: 'java'
 
