@@ -6,8 +6,8 @@ To build locally run:
 
     gradle build shadowjar
 
-This will generate two jars. `swiftype-app-search-0.1.0-all.jar` includes all necessary
-dependencies and `swiftype-app-search-0.1.0.jar` includes only the client code.
+This will generate two jars. `swiftype-app-search-<version>-all.jar` includes all necessary
+dependencies and `swiftype-app-search-<version>.jar` includes only the client code.
 
 ## Usage
 
@@ -25,7 +25,12 @@ String apiKey = "api-mu75psc5egt9ppzuycnc2mc3";
 Client client = new Client(accountHostKey, apiKey);
 ```
 
-### Indexing: Creating and updating Documents
+### API Methods
+
+This client is a thin interface to the Swiftype App Search Api. Additional details for requests and responses can be
+found in the [documentation](https://swiftype.com/documentation/app-search).
+
+#### Indexing: Creating and updating Documents
 
 ```java
 String engineName = "favorite-videos";
@@ -44,41 +49,89 @@ doc2.put("body", "A great video of another cool cat.");
 List<Map<String, Object>> documents = Arrays.asList(doc1, doc2)
 
 try {
-  client.indexDocuments(engineName, documents);
+  List<Map<String, Object>> response = client.indexDocuments(engineName, documents);
+  System.out.println(response);
 } catch (ClientException e) {
-  // handle error
+  System.out.println(e);
 }
 ```
 
-### Listing Documents
+#### Retrieving Documents
 
 ```java
 String engineName = "favorite-videos";
 List<String> documentIds = Arrays.asList("INscMGmhmX4", "JNDFojsd02");
 
 try {
-  List<Map<String, Object>> documentContents = client.getDocuments(engineName, documentIds);
-  // handle document contents
+  List<Map<String, Object>> response = client.getDocuments(engineName, documentIds);
+  System.out.println(response);
 } catch (ClientException e) {
-  // handle error
+  System.out.println(e);
 }
 ```
 
-### Destroying Documents
+#### Destroying Documents
 
 ```java
 String engineName = "favorite-videos";
 List<String> documentIds = Arrays.asList("INscMGmhmX4", "JNDFojsd02");
 
 try {
-  List<Map<String, Object>> destroyDocumentResults = client.destroyDocuments(engineName, documentIds)
-  // handle destroy document results
+  List<Map<String, Object>> response = client.destroyDocuments(engineName, documentIds)
+  System.out.println(response);
 } catch (ClientException e) {
-  // handle error
+  System.out.println(e);
 }
 ```
 
-### Searching
+##### Listing Engines
+
+```java
+try {
+  Map<String, Object> response = client.listEngines();
+  System.out.println(response);
+} catch (ClientException e) {
+  System.out.println(e);
+}
+```
+
+##### Retrieving Engines
+```java
+String engineName = "favorite-videos";
+
+try {
+  Map<String, Object> response = client.getEngine(engineName);
+  System.out.println(response);
+} catch (ClientException e) {
+  System.out.println(e);
+}
+```
+
+##### Creating Engines
+```java
+String engineName = "favorite-videos";
+
+try {
+  Map<String, Object> response = client.createEngine(engineName);
+  System.out.println(response);
+} catch (ClientException e) {
+  System.out.println(e);
+}
+```
+
+##### Destroying Engines
+```java
+String engineName = "favorite-videos";
+
+try {
+  Map<String, Boolean> response = client.destroyEngine(engineName);
+  System.out.println(response);
+} catch (ClientException e) {
+  System.out.println(e);
+}
+```
+
+#### Searching
 
 ```java
 String engineName = "favorite-videos";
@@ -97,10 +150,10 @@ options.put("search_fields", searchFields);
 options.put("result_fields", resultFields);
 
 try {
-  Map<String, Object> searchResults = client.search(engineName, query, options)
-  // handle search results
+  Map<String, Object> response = client.search(engineName, query, options)
+  System.out.println(response);
 } catch (ClientException e) {
-  // handle error
+  System.out.println(e);
 }
 ```
 
@@ -113,4 +166,4 @@ ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" grad
 
 ## Contributions
 
-To contribute code to this gem, please fork the repository and submit a pull request.
+To contribute code, please fork the repository and submit a pull request.
