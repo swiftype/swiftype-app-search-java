@@ -2,7 +2,13 @@
 
 ## Installation
 
-To build locally run:
+This project is not currently published to any public repositories. You will need to install the JARs manually.
+
+The latest builds can be found here: https://github.com/swiftype/swiftype-app-search-java/releases/latest
+
+## Build locally
+
+Run:
 
     ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
 
@@ -84,7 +90,7 @@ try {
 }
 ```
 
-##### Listing Engines
+#### Listing Engines
 
 ```java
 try {
@@ -95,7 +101,7 @@ try {
 }
 ```
 
-##### Retrieving Engines
+#### Retrieving Engines
 
 ```java
 String engineName = "favorite-videos";
@@ -108,7 +114,7 @@ try {
 }
 ```
 
-##### Creating Engines
+#### Creating Engines
 
 ```java
 String engineName = "favorite-videos";
@@ -121,7 +127,7 @@ try {
 }
 ```
 
-##### Destroying Engines
+#### Destroying Engines
 
 ```java
 String engineName = "favorite-videos";
