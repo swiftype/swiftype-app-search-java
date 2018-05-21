@@ -4,7 +4,7 @@
 
 To build locally run:
 
-    gradle build shadowjar
+    ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
 
 This will generate two jars. `swiftype-app-search-<version>-all.jar` includes all necessary
 dependencies and `swiftype-app-search-<version>.jar` includes only the client code.
@@ -96,6 +96,7 @@ try {
 ```
 
 ##### Retrieving Engines
+
 ```java
 String engineName = "favorite-videos";
 
@@ -108,6 +109,7 @@ try {
 ```
 
 ##### Creating Engines
+
 ```java
 String engineName = "favorite-videos";
 
@@ -120,6 +122,7 @@ try {
 ```
 
 ##### Destroying Engines
+
 ```java
 String engineName = "favorite-videos";
 
@@ -156,7 +159,6 @@ try {
   System.out.println(e);
 }
 ```
-
 
 ## Running Tests
 
