@@ -16,22 +16,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {
 
-  private String hostKey;
+  private String hostIdentifier;
   private String apiKey;
   private String engineName;
   private Client client;
 
   @BeforeEach
   public void setUp() {
-    hostKey = System.getenv("ST_APP_SEARCH_HOST_KEY");
+    hostIdentifier = System.getenv("ST_APP_SEARCH_HOST_IDENTIFIER") != null
+      ? System.getenv("ST_APP_SEARCH_HOST_IDENTIFIER")
+      : System.getenv("ST_APP_SEARCH_HOST_KEY"); // Deprecated
+
     apiKey = System.getenv("ST_APP_SEARCH_API_KEY");
     engineName = Optional.ofNullable(System.getenv("ST_APP_SEARCH_TEST_ENGINE_NAME"))
         .orElse("java-client-test-engine");
 
-    assertNotNull(hostKey, "Missing required env variable: ST_APP_SEARCH_HOST_KEY");
+    assertNotNull(hostIdentifier, "Missing required env variable: ST_APP_SEARCH_HOST_IDENTIFIER");
     assertNotNull(apiKey, "Missing required env variable: ST_APP_SEARCH_API_KEY");
 
-    client = new Client(hostKey, apiKey);
+    client = new Client(hostIdentifier, apiKey);
 
     try {
       client.destroyEngine(engineName);
@@ -41,7 +44,7 @@ class ClientTest {
 
   @Test
   void testBaseUrl() {
-    assertEquals(String.format("https://%s.api.swiftype.com/api/as/v1/", hostKey), client.baseUrl());
+    assertEquals(String.format("https://%s.api.swiftype.com/api/as/v1/", hostIdentifier), client.baseUrl());
   }
 
   @Test
