@@ -10,7 +10,7 @@ The latest builds can be found here: https://github.com/swiftype/swiftype-app-se
 
 Run:
 
-    ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
+    ST_APP_SEARCH_HOST_IDENTIFIER="YOUR_HOST_IDENTIFIER" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
 
 This will generate two jars. `swiftype-app-search-<version>-all.jar` includes all necessary
 dependencies and `swiftype-app-search-<version>.jar` includes only the client code.
@@ -19,16 +19,16 @@ dependencies and `swiftype-app-search-<version>.jar` includes only the client co
 
 ### Setup: Configuring the client and authentication
 
-Create a new instance of the Swiftype App Search Client. This requires your `ACCOUNT_HOST_KEY`, which
+Create a new instance of the Swiftype App Search Client. This requires your `HOST_IDENTIFIER`, which
 identifies the unique hostname of the Swiftype API that is associated with your Swiftype account.
 It also requires a valid `API_KEY`, which authenticates requests to the API:
 
 ```java
 import com.swiftype.appsearch.Client;
 
-String accountHostKey = "host-c5s2mj";
+String hostIdentifier = "host-c5s2mj";
 String apiKey = "api-mu75psc5egt9ppzuycnc2mc3";
-Client client = new Client(accountHostKey, apiKey);
+Client client = new Client(hostIdentifier, apiKey);
 ```
 
 ### API Methods
@@ -169,7 +169,7 @@ try {
 ## Running Tests
 
 ```bash
-ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle test
+ST_APP_SEARCH_HOST_IDENTIFIER="YOUR_HOST_IDENTIFIER" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle test
 ```
 
 ## Contributions
