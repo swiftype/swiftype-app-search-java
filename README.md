@@ -12,7 +12,7 @@ The latest builds can be found here: https://github.com/swiftype/swiftype-app-se
 
 Run:
 
-    ST_APP_SEARCH_HOST_IDENTIFIER="YOUR_HOST_IDENTIFIER" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
+    ST_APP_SEARCH_HOST_IDENTIFIER="YOUR_HOST_IDENTIFIER" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" ./gradlew build shadowjar
 
 This will generate two jars. `swiftype-app-search-<version>-all.jar` includes all necessary
 dependencies and `swiftype-app-search-<version>.jar` includes only the client code.
@@ -171,7 +171,7 @@ try {
 ## Running Tests
 
 ```bash
-ST_APP_SEARCH_HOST_IDENTIFIER="YOUR_HOST_IDENTIFIER" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle test
+ST_APP_SEARCH_HOST_IDENTIFIER="YOUR_HOST_IDENTIFIER" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" ./gradlew test
 ```
 
 ## Contributions
