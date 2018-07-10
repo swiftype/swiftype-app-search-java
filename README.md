@@ -1,5 +1,7 @@
 # Java client for the Swiftype App Search Api
 
+[![CircleCI](https://circleci.com/gh/swiftype/swiftype-app-search-java.svg?style=svg)](https://circleci.com/gh/swiftype/swiftype-app-search-java)
+
 ## Installation
 
 This project is not currently published to any public repositories. You will need to install the JARs manually.
