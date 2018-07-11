@@ -229,7 +229,8 @@ public class Client {
 
       try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
         HttpDynamicRequestWithBody request = new HttpDynamicRequestWithBody(httpMethod, baseUrl + path);
-        request.setHeader(HttpHeaders.USER_AGENT, String.format("swiftype-app-search-java/%s", VERSION));
+        request.setHeader("X-Swiftype-Client", "swiftype-app-search-java");
+        request.setHeader("X-Swiftype-Client-Version", VERSION);
         request.setHeader(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", apiKey));
         request.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 
