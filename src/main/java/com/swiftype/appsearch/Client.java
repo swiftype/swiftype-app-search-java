@@ -27,7 +27,7 @@ import com.google.gson.reflect.TypeToken;
  */
 public class Client {
   // Remember to also update version in build.gradle!
-  private final String VERSION = "0.2.0";
+  private final String VERSION = "0.3.0";
 
   private final String baseUrl;
   private final String apiKey;
@@ -229,7 +229,8 @@ public class Client {
 
       try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
         HttpDynamicRequestWithBody request = new HttpDynamicRequestWithBody(httpMethod, baseUrl + path);
-        request.setHeader(HttpHeaders.USER_AGENT, String.format("swiftype-app-search-java/%s", VERSION));
+        request.setHeader("X-Swiftype-Client", "swiftype-app-search-java");
+        request.setHeader("X-Swiftype-Client-Version", VERSION);
         request.setHeader(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", apiKey));
         request.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 
