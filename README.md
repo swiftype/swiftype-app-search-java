@@ -175,7 +175,7 @@ options.put("search_fields", searchFields);
 options.put("result_fields", resultFields);
 
 try {
-  Map<String, Object> response = client.search(engineName, query, options)
+  Map<String, Object> response = client.search(engineName, query, options);
   System.out.println(response);
 } catch (ClientException e) {
   System.out.println(e);
