@@ -1,17 +1,33 @@
-# Java client for the Swiftype App Search Api
+<p align="center"><img src="https://github.com/swiftype/swiftype-app-search-java/blob/master/logo-app-search.png?raw=true" alt="Elastic App Search Logo"></p>
 
-## Installation
+<p align="center"><a href="https://circleci.com/gh/swiftype/swiftype-app-search-java"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-java.svg?style=svg" alt="CircleCI buidl"></a>
+<a href="https://github.com/swiftype/swiftype-app-search-java/releases"><img src="https://img.shields.io/github/release/swiftype/swiftype-app-search-java/all.svg?style=flat-square" alt="GitHub release" /></a></p>
+
+> A first-party Java client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/cloud/app-search-service).
+
+## Contents
+
+- [Getting started](#getting-started-)
+- [Usage](#usage)
+- [Running tests](#running-tests)
+- [FAQ](#faq-)
+- [Contribute](#contribute-)
+- [License](#license-)
+
+---
+
+## Getting started 🐣
 
 This project is not currently published to any public repositories. You will need to install the JARs manually.
 
 The latest builds can be found here: https://github.com/swiftype/swiftype-app-search-java/releases/latest
 
-## Build locally
+### Build locally
 
 Run:
-
-    ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
-
+```bash
+ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
+```
 This will generate two jars. `swiftype-app-search-<version>-all.jar` includes all necessary
 dependencies and `swiftype-app-search-<version>.jar` includes only the client code.
 
@@ -166,12 +182,35 @@ try {
 }
 ```
 
-## Running Tests
+## Running tests
 
 ```bash
 ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle test
 ```
 
-## Contributions
+## FAQ 🔮
 
-To contribute code, please fork the repository and submit a pull request.
+### Where do I report issues with the client?
+
+If something is not working as expected, please open an [issue](https://github.com/swiftype/swiftype-app-search-java/issues/new).
+
+### Where can I learn more about App Search?
+
+Your best bet is to read the [documentation](https://swiftype.com/documentation/app-search).
+
+### Where else can I go to get help?
+
+You can checkout the [Elastic App Search community discuss forums](https://discuss.elastic.co/c/app-search).
+
+## Contribute 🚀
+
+We welcome contributors to the project. Before you begin, a couple notes...
+
+- Prior to opening a pull request, please create an issue to [discuss the scope of your proposal](https://github.com/swiftype/swiftype-app-search-java/issues).
+- Please write simple code and concise documentation, when appropriate.
+
+## License 📗
+
+[MIT](https://github.com/swiftype/swiftype-app-search-java/blob/master/LICENSE) © [Elastic](https://github.com/elastic)
+
+Thank you to all the [contributors](https://github.com/swiftype/swiftype-app-search-java/graphs/contributors)!
