@@ -27,28 +27,28 @@ import com.google.gson.reflect.TypeToken;
  */
 public class Client {
   // Remember to also update version in build.gradle!
-  private final String VERSION = "0.1.2";
+  private final String VERSION = "0.3.0";
 
   private final String baseUrl;
   private final String apiKey;
 
   /**
-   * @param accountHostKey account host key to use for base url
+   * @param hostIdentifier host identifier to use for base url
    * @param apiKey api key to use for authentication
    */
-  public Client(String accountHostKey, String apiKey) {
-    this(accountHostKey, apiKey, "https://%s.api.swiftype.com/api/as/v1/");
+  public Client(String hostIdentifier, String apiKey) {
+    this(hostIdentifier, apiKey, "https://%s.api.swiftype.com/api/as/v1/");
   }
 
   /**
    * Dev only constructor for hitting dev/private endpoints.
    *
-   * @param accountHostKey account host key to use for base url
+   * @param hostIdentifier host identifier to use for base url
    * @param apiKey api key to use for authentication
-   * @param baseUrlFormatString format string to build a custom base url using host key
+   * @param baseUrlFormatString format string to build a custom base url using host identifier
    */
-  public Client(String accountHostKey, String apiKey, String baseUrlFormatString) {
-    this.baseUrl = String.format(baseUrlFormatString, accountHostKey);
+  public Client(String hostIdentifier, String apiKey, String baseUrlFormatString) {
+    this.baseUrl = String.format(baseUrlFormatString, hostIdentifier);
     this.apiKey = apiKey;
   }
 
@@ -229,7 +229,8 @@ public class Client {
 
       try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
         HttpDynamicRequestWithBody request = new HttpDynamicRequestWithBody(httpMethod, baseUrl + path);
-        request.setHeader(HttpHeaders.USER_AGENT, String.format("swiftype-app-search-java/%s", VERSION));
+        request.setHeader("X-Swiftype-Client", "swiftype-app-search-java");
+        request.setHeader("X-Swiftype-Client-Version", VERSION);
         request.setHeader(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", apiKey));
         request.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 

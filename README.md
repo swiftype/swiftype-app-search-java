@@ -38,16 +38,30 @@ dependencies.
 
 ### Setup: Configuring the client and authentication
 
-Create a new instance of the Swiftype App Search Client. This requires your `ACCOUNT_HOST_KEY`, which
+Create a new instance of the Swiftype App Search Client. This requires your `HOST_IDENTIFIER`, which
 identifies the unique hostname of the Swiftype API that is associated with your Swiftype account.
 It also requires a valid `API_KEY`, which authenticates requests to the API:
 
 ```java
 import com.swiftype.appsearch.Client;
 
-String accountHostKey = "host-c5s2mj";
-String apiKey = "api-mu75psc5egt9ppzuycnc2mc3";
-Client client = new Client(accountHostKey, apiKey);
+String hostIdentifier = "host-c5s2mj";
+String apiKey = "private-mu75psc5egt9ppzuycnc2mc3";
+Client client = new Client(hostIdentifier, apiKey);
+```
+
+### Using with App Search Managed Deploys
+
+The client can be configured to use a managed deploy by using the
+`baseUrl` parameter. Since managed deploys do not rely on a `hostIdentifier`.
+, it can be omitted.
+
+```java
+import com.swiftype.appsearch.Client;
+
+String apiKey = "private-mu75psc5egt9ppzuycnc2mc3";
+String baseUrl = "http://localhost:3002/api/as/v1/";
+Client client = new Client(null, apiKey, baseUrl);
 ```
 
 ### API Methods
@@ -71,7 +85,7 @@ doc2.put("url", "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 doc2.put("title", "Another Grumpy Cat");
 doc2.put("body", "A great video of another cool cat.");
 
-List<Map<String, Object>> documents = Arrays.asList(doc1, doc2)
+List<Map<String, Object>> documents = Arrays.asList(doc1, doc2);
 
 try {
   List<Map<String, Object>> response = client.indexDocuments(engineName, documents);
@@ -178,7 +192,7 @@ options.put("search_fields", searchFields);
 options.put("result_fields", resultFields);
 
 try {
-  Map<String, Object> response = client.search(engineName, query, options)
+  Map<String, Object> response = client.search(engineName, query, options);
   System.out.println(response);
 } catch (ClientException e) {
   System.out.println(e);
@@ -188,7 +202,7 @@ try {
 ## Running tests
 
 ```bash
-ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle test
+ST_APP_SEARCH_HOST_IDENTIFIER="YOUR_HOST_IDENTIFIER" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" ./gradlew test
 ```
 
 ## FAQ 🔮
