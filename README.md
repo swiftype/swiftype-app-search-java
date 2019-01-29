@@ -28,8 +28,11 @@ Run:
 ```bash
 ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
 ```
-This will generate two jars. `swiftype-app-search-<version>-all.jar` includes all necessary
-dependencies and `swiftype-app-search-<version>.jar` includes only the client code.
+This will generate two jars:
+
+1. `swiftype-app-search-<version>-all.jar`: includes all
+dependencies.
+2. `swiftype-app-search-<version>.jar` includes only client code.
 
 ## Usage
 
