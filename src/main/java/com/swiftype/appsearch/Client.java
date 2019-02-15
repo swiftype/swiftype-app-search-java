@@ -82,6 +82,22 @@ public class Client {
   }
 
   /**
+   * Execute multiple searches for documents.
+   *
+   * @param engineName unique engine name
+   * @param queries List of queries. see the <a href="https://swiftype.com/documentation/app-search/">App Search API</a>.
+   * @return search result
+   * @throws ClientException if the api request fails
+   */
+  public List<Map<String, Object>> multiSearch(String engineName, List<Map> queries) throws ClientException {
+    Map<String, Object> reqBody = new HashMap<>();
+    reqBody.put("queries", queries);
+
+    return makeJsonRequest("PO" +
+            "ST", String.format("engines/%s/multi_search", engineName), reqBody, JsonTypes.ARRAY_OF_OBJECTS);
+  }
+
+  /**
    * Requests suggestions for search query
    *
    * @param engineName unique engine name

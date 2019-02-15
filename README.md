@@ -203,6 +203,36 @@ try {
 }
 ```
 
+#### Multi-Search
+
+```java
+String engineName = "favorite-videos";
+
+Map<String, Object> searchFields = new HashMap<>();
+searchFields.put("title", Collections.emptyMap());
+Map<String, Object> idResultField = new HashMap<>();
+idResultField.put("raw", Collections.emptyMap());
+Map<String, Object> resultFields = new HashMap<>();
+resultFields.put("title", idResultField);
+
+Map<String, Object> search1 = new HashMap<>();
+search1.put("query", "cat");
+search1.put("search_fields", searchFields);
+search1.put("result_fields", resultFields);
+
+Map<String, Object> search2 = new HashMap<>();
+search2.put("query", "grumpy");
+
+List<Map> searches = Arrays.asList(search1, search2);
+
+try {
+  List<Map<String, Object>> response = client.multiSearch(engineName, searches);
+  System.out.println(response);
+} catch (ClientException e) {
+  System.out.println(e);
+}
+```
+
 #### Query Suggestion
 
 ```java
