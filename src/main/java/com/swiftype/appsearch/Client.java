@@ -93,8 +93,7 @@ public class Client {
     Map<String, Object> reqBody = new HashMap<>();
     reqBody.put("queries", queries);
 
-    return makeJsonRequest("PO" +
-            "ST", String.format("engines/%s/multi_search", engineName), reqBody, JsonTypes.ARRAY_OF_OBJECTS);
+    return makeJsonRequest("POST", String.format("engines/%s/multi_search", engineName), reqBody, JsonTypes.ARRAY_OF_OBJECTS);
   }
 
   /**
