@@ -25,13 +25,15 @@ The latest builds can be found here: https://github.com/swiftype/swiftype-app-se
 ### Build locally
 
 Run:
+
 ```bash
 ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
 ```
+
 This will generate two jars:
 
 1. `swiftype-app-search-<version>-all.jar`: includes all
-dependencies.
+   dependencies.
 2. `swiftype-app-search-<version>.jar` includes only client code.
 
 ## Usage
@@ -108,6 +110,8 @@ try {
   System.out.println(e);
 }
 ```
+
+---
 
 #### Destroying Documents
 
@@ -193,6 +197,30 @@ options.put("result_fields", resultFields);
 
 try {
   Map<String, Object> response = client.search(engineName, query, options);
+  System.out.println(response);
+} catch (ClientException e) {
+  System.out.println(e);
+}
+```
+
+#### Query Suggestion
+
+```java
+String engineName = "favorite-videos";
+String query = "cat";
+
+Map<String, List<String>> documents = new HashMap<>();
+documents.put("fields", Arrays.asList("title"));
+
+Map<String, Object> types = new HashMap<>();
+types.put("documents", documents);
+
+Map<String, Object> options = new HashMap<>();
+options.put("size", 3);
+options.put("types", types);
+
+try {
+  Map<String, Object> response = client.querySuggestion(engineName, query, options);
   System.out.println(response);
 } catch (ClientException e) {
   System.out.println(e);

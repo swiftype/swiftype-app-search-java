@@ -82,6 +82,35 @@ public class Client {
   }
 
   /**
+   * Requests suggestions for search query
+   *
+   * @param engineName unique engine name
+   * @param query search query string
+   * @return search results
+   * @throws ClientException if the api request fails
+   */
+  public Map<String, Object> querySuggestion(String engineName, String query) throws ClientException {
+    return querySuggestion(engineName, query, Collections.emptyMap());
+  }
+
+  /**
+   * Requests suggestions for search query
+   *
+   * @param engineName unique engine name
+   * @param query search query string
+   * @param options see the <a href="https://swiftype.com/documentation/app-search/">App Search API</a> for supported search options.
+   * @return search results
+   * @throws ClientException if the api request fails
+   */
+  public Map<String, Object> querySuggestion(String engineName, String query, Map<String, Object> options) throws ClientException {
+    Map<String, Object> reqBody = new HashMap<>();
+    reqBody.putAll(options);
+    reqBody.put("query", query);
+
+    return makeJsonRequest("POST", String.format("engines/%s/query_suggestion", engineName), reqBody, JsonTypes.OBJECT);
+  }
+
+  /**
    * Lists the first 20 engines that the api key has access to.
    * @return engines list
    * @throws ClientException if the api request fails
