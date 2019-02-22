@@ -31,7 +31,9 @@ The Java client depends on:
 
 You can add the dependices to your Gradle or Maven configuration files.
 
-#### Gradle Config
+#### Build with Gradle
+
+Add the following to your `build.gradle` file:
 
 ```
 dependencies {
@@ -40,7 +42,9 @@ dependencies {
 }
 ```
 
-#### Maven Config
+#### Build with Maven
+
+Add the following to your `pom.xml` file:
 
 ```
 <dependencies>
