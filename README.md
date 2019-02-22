@@ -22,12 +22,54 @@ This project is not currently published to any public repositories. You will nee
 
 The latest builds can be found here: https://github.com/swiftype/swiftype-app-search-java/releases/latest
 
+### Dependencies
+
+The Java client depends on:
+
+1. [GSON](https://github.com/google/gson)
+2. [httpclient](https://github.com/apache/httpcomponents-client)
+
+You can add the dependices to your Gradle or Maven configuration files.
+
+#### Build with Gradle
+
+Add the following to your `build.gradle` file:
+
+```
+dependencies {
+  compile 'com.google.code.gson:gson:2.8.2'
+  compile 'org.apache.httpcomponents:httpclient:4.5.5'
+}
+```
+
+#### Build with Maven
+
+Add the following to your `pom.xml` file:
+
+```
+<dependencies>
+    <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.8.2</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5.5</version>
+    </dependency>
+</dependencies>
+```
+
 ### Build locally
 
 Run:
+
 ```bash
 ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" gradle build shadowjar
 ```
+
 This will generate two jars:
 
 1. `swiftype-app-search-<version>-all.jar`: includes all
