@@ -27,7 +27,7 @@ import com.google.gson.reflect.TypeToken;
  */
 public class Client {
   // Remember to also update version in build.gradle!
-  private final String VERSION = "0.3.0";
+  private final String VERSION = "0.4.0";
 
   private final String baseUrl;
   private final String apiKey;
@@ -79,6 +79,50 @@ public class Client {
     reqBody.put("query", query);
 
     return makeJsonRequest("GET", String.format("engines/%s/search", engineName), reqBody, JsonTypes.OBJECT);
+  }
+
+  /**
+   * Execute multiple searches for documents.
+   *
+   * @param engineName unique engine name
+   * @param queries List of queries. see the <a href="https://swiftype.com/documentation/app-search/">App Search API</a>.
+   * @return search result
+   * @throws ClientException if the api request fails
+   */
+  public List<Map<String, Object>> multiSearch(String engineName, List<Map> queries) throws ClientException {
+    Map<String, Object> reqBody = new HashMap<>();
+    reqBody.put("queries", queries);
+
+    return makeJsonRequest("POST", String.format("engines/%s/multi_search", engineName), reqBody, JsonTypes.ARRAY_OF_OBJECTS);
+  }
+
+  /**
+   * Requests suggestions for search query
+   *
+   * @param engineName unique engine name
+   * @param query search query string
+   * @return search results
+   * @throws ClientException if the api request fails
+   */
+  public Map<String, Object> querySuggestion(String engineName, String query) throws ClientException {
+    return querySuggestion(engineName, query, Collections.emptyMap());
+  }
+
+  /**
+   * Requests suggestions for search query
+   *
+   * @param engineName unique engine name
+   * @param query search query string
+   * @param options see the <a href="https://swiftype.com/documentation/app-search/">App Search API</a> for supported search options.
+   * @return search results
+   * @throws ClientException if the api request fails
+   */
+  public Map<String, Object> querySuggestion(String engineName, String query, Map<String, Object> options) throws ClientException {
+    Map<String, Object> reqBody = new HashMap<>();
+    reqBody.putAll(options);
+    reqBody.put("query", query);
+
+    return makeJsonRequest("POST", String.format("engines/%s/query_suggestion", engineName), reqBody, JsonTypes.OBJECT);
   }
 
   /**

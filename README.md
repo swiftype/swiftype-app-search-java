@@ -73,7 +73,7 @@ ST_APP_SEARCH_HOST_KEY="YOUR_HOST_KEY" ST_APP_SEARCH_API_KEY="YOUR_API_KEY" grad
 This will generate two jars:
 
 1. `swiftype-app-search-<version>-all.jar`: includes all
-dependencies.
+   dependencies.
 2. `swiftype-app-search-<version>.jar` includes only client code.
 
 ## Usage
@@ -150,6 +150,8 @@ try {
   System.out.println(e);
 }
 ```
+
+---
 
 #### Destroying Documents
 
@@ -235,6 +237,60 @@ options.put("result_fields", resultFields);
 
 try {
   Map<String, Object> response = client.search(engineName, query, options);
+  System.out.println(response);
+} catch (ClientException e) {
+  System.out.println(e);
+}
+```
+
+#### Multi-Search
+
+```java
+String engineName = "favorite-videos";
+
+Map<String, Object> searchFields = new HashMap<>();
+searchFields.put("title", Collections.emptyMap());
+Map<String, Object> idResultField = new HashMap<>();
+idResultField.put("raw", Collections.emptyMap());
+Map<String, Object> resultFields = new HashMap<>();
+resultFields.put("title", idResultField);
+
+Map<String, Object> search1 = new HashMap<>();
+search1.put("query", "cat");
+search1.put("search_fields", searchFields);
+search1.put("result_fields", resultFields);
+
+Map<String, Object> search2 = new HashMap<>();
+search2.put("query", "grumpy");
+
+List<Map> searches = Arrays.asList(search1, search2);
+
+try {
+  List<Map<String, Object>> response = client.multiSearch(engineName, searches);
+  System.out.println(response);
+} catch (ClientException e) {
+  System.out.println(e);
+}
+```
+
+#### Query Suggestion
+
+```java
+String engineName = "favorite-videos";
+String query = "cat";
+
+Map<String, List<String>> documents = new HashMap<>();
+documents.put("fields", Arrays.asList("title"));
+
+Map<String, Object> types = new HashMap<>();
+types.put("documents", documents);
+
+Map<String, Object> options = new HashMap<>();
+options.put("size", 3);
+options.put("types", types);
+
+try {
+  Map<String, Object> response = client.querySuggestion(engineName, query, options);
   System.out.println(response);
 } catch (ClientException e) {
   System.out.println(e);
