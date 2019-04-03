@@ -28,7 +28,7 @@ import com.google.gson.reflect.TypeToken;
  */
 public class Client {
   // Remember to also update version in build.gradle!
-  private final String VERSION = "0.4.0";
+  private final String VERSION = "0.4.1";
 
   private final String baseUrl;
   private final String apiKey;
