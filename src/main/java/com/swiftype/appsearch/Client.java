@@ -285,7 +285,8 @@ public class Client {
         try (CloseableHttpResponse response = httpClient.execute(request)) {
           int statusCode = response.getStatusLine().getStatusCode();
           if (statusCode < 200 || statusCode > 299) {
-            throw new ClientException(String.format("Error: %d", statusCode));
+            String respBody = EntityUtils.toString(response.getEntity());
+            throw new ClientException(String.format("Error: %d %s", statusCode, respBody));
           }
           String respBody = EntityUtils.toString(response.getEntity());
           return new Gson().fromJson(respBody, resultType.getType());
