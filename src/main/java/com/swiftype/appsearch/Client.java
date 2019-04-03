@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Consts;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -279,7 +280,7 @@ public class Client {
         request.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 
         if (reqBody != null) {
-          request.setEntity(new StringEntity(reqBody, "UTF-8"));
+          request.setEntity(new StringEntity(reqBody, Consts.UTF_8));
         }
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {
