@@ -279,7 +279,7 @@ public class Client {
         request.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 
         if (reqBody != null) {
-          request.setEntity(new StringEntity(reqBody));
+          request.setEntity(new StringEntity(reqBody, "UTF-8"));
         }
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {
