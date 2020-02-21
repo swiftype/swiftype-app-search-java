@@ -4,8 +4,6 @@
 >
 > **Please use our [REST API](https://swiftype.com/documentation/app-search/api/overview) directly. Thank you! - Elastic**
 
-<p align="center"><a href="https://circleci.com/gh/swiftype/swiftype-app-search-java"><img src="https://circleci.com/gh/swiftype/swiftype-app-search-java.svg?style=svg" alt="CircleCI buidl"></a>
-<a href="https://github.com/swiftype/swiftype-app-search-java/releases"><img src="https://img.shields.io/github/release/swiftype/swiftype-app-search-java/all.svg?style=flat-square" alt="GitHub release" /></a></p>
 
 > A first-party Java client for building excellent, relevant search experiences with [Elastic App Search](https://www.elastic.co/cloud/app-search-service).
 
